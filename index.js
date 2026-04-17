@@ -1,13 +1,8 @@
-const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
-const path = require('path');
-
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
+        executablePath: '/usr/bin/google-chrome', // Ruta fija del Docker
         headless: true,
-        // ESTA ES LA RUTA MÁGICA PARA RENDER:
-        executablePath: '/usr/bin/google-chrome-stable', 
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -15,7 +10,6 @@ const client = new Client({
         ]
     }
 });
-
 // ... resto de tu código de stickers y links ...
 client.on('qr', qr => qrcode.generate(qr, {small: true}));
 client.on('ready', () => console.log('✅ BOT ONLINE'));
